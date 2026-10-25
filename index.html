@@ -247,6 +247,20 @@
   .pc-purple { background: linear-gradient(160deg, var(--brand-magenta) -30%, var(--brand-purple) 60%); box-shadow: rgba(44,30,116,0.16) 0 0 15px; }
   .pc-magenta { background: var(--brand-magenta); }
 
+  /* ---------- Wedding moments (photo cards) ---------- */
+  .moments { display: grid; grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: 260px 260px; gap: var(--s-md); }
+  .moment { position: relative; overflow: hidden; isolation: isolate; border-radius: var(--r-hero); background: var(--primary); color: #fff; }
+  .moment.big { grid-row: span 2; }
+  .moment img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; z-index: -2; transition: transform 900ms var(--ease-out); }
+  .moment:hover img { transform: scale(1.04); }
+  .moment::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10,10,10,0) 40%, rgba(10,10,10,0.72) 100%); }
+  .moment .cap { position: absolute; left: var(--s-xl); right: var(--s-xl); bottom: var(--s-xl); }
+  .moment .cap span { font-family: var(--mono); font-size: 11px; letter-spacing: 1px; opacity: 0.8; }
+  .moment .cap b { display: block; font-size: 22px; font-weight: 600; line-height: 1.3; margin-top: 4px; }
+  .moment.big .cap b { font-size: 32px; letter-spacing: -0.5px; }
+  .moment .cap p { font-size: 14px; opacity: 0.85; margin-top: 2px; }
+  .moments-note { font-size: 12px; color: var(--stone); margin-top: var(--s-md); }
+
   /* ---------- Departure board ---------- */
   .board { background: var(--primary); color: #fff; border-radius: var(--r-xxxl); padding: var(--s-xxl); overflow: hidden; }
   .board-head { display: flex; justify-content: space-between; align-items: center; gap: var(--s-md); margin-bottom: var(--s-xl); flex-wrap: wrap; }
@@ -430,6 +444,8 @@
     .matrix::-webkit-scrollbar { display: none; }
     .pcard { flex: 0 0 300px; scroll-snap-align: start; }
     .tiles { grid-template-columns: repeat(2, 1fr); }
+    .moments { grid-template-columns: 1fr 1fr; grid-template-rows: 320px 220px 220px; }
+    .moment.big { grid-row: auto; grid-column: span 2; }
     .about, .loc { grid-template-columns: 1fr; }
     .panel { grid-template-columns: 1fr; }
     .pass { grid-template-columns: 1fr; }
@@ -469,6 +485,9 @@
     .hero h1 { font-size: 32px; letter-spacing: -0.5px; }
     .ticket .iata { font-size: 32px; }
     .tiles, .foot-grid { grid-template-columns: 1fr; }
+    .moments { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: 220px; }
+    .moment.big { grid-column: auto; }
+    .moment.big .cap b { font-size: 26px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -856,12 +875,48 @@
       </div>
     </div>
 
-    <!-- Vibrant service matrix -->
-    <section class="block" id="services">
+    <!-- Wedding moments: stock photos -->
+    <section class="block" id="moments">
       <div class="container">
         <div class="sec-head reveal">
           <div>
-            <span class="idx">01 — SERVICES</span>
+            <span class="idx">01 — MOMENTS</span>
+            <h2>만남에서 새 출발까지</h2>
+            <p>맞선과 약속, 결혼식과 피로연까지 이화가 곁에서 함께합니다.</p>
+          </div>
+        </div>
+        <div class="moments stagger">
+          <figure class="moment big">
+            <img src="https://images.unsplash.com/photo-1550005809-91ad75fb315f?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="부케를 든 신부와 신랑" loading="lazy" />
+            <figcaption class="cap"><span>NEW START</span><b>새로운 가정의 시작</b><p>맞선부터 결혼식, 신부 입국까지</p></figcaption>
+          </figure>
+          <figure class="moment">
+            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="반지를 낀 두 손을 포개 잡은 신랑 신부" loading="lazy" />
+            <figcaption class="cap"><span>MEETING</span><b>만남</b><p>희망하시는 상대와 부담 없는 맞선</p></figcaption>
+          </figure>
+          <figure class="moment">
+            <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="흰 천 위에 놓인 금색 결혼반지 두 개" loading="lazy" />
+            <figcaption class="cap"><span>PROMISE</span><b>약속</b><p>양국 혼인신고로 완성하는 약속</p></figcaption>
+          </figure>
+          <figure class="moment">
+            <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="꽃으로 장식한 야외 예식 아치" loading="lazy" />
+            <figcaption class="cap"><span>CEREMONY</span><b>결혼식</b><p>현지 예식과 처가 방문</p></figcaption>
+          </figure>
+          <figure class="moment">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="꽃과 유리잔으로 꾸민 피로연 테이블" loading="lazy" />
+            <figcaption class="cap"><span>RECEPTION</span><b>피로연</b><p>하객과 함께 나누는 축하</p></figcaption>
+          </figure>
+        </div>
+        <p class="moments-note">사진은 분위기를 보여 드리기 위한 이미지이며 실제 고객 사진이 아닙니다. 사진 출처: Unsplash</p>
+      </div>
+    </section>
+
+    <!-- Vibrant service matrix -->
+    <section class="block" id="services" style="padding-top:0">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div>
+            <span class="idx">02 — SERVICES</span>
             <h2>이화가 하는 네 가지 일</h2>
             <p>만남 주선부터 혼인 서류, 처가 초청, 번역공증까지 한 곳에서 진행합니다. 카드를 눌러 자세히 보세요.</p>
           </div>
@@ -930,7 +985,7 @@
     <!-- White tiles: all services -->
     <section class="block">
       <div class="container">
-        <div class="sec-head reveal"><div><span class="idx">02 — ALL SERVICES</span><h2>전체 업무 분야</h2><p>국제결혼 중개부터 서류대행, 초청, 번역공증까지</p></div></div>
+        <div class="sec-head reveal"><div><span class="idx">03 — ALL SERVICES</span><h2>전체 업무 분야</h2><p>국제결혼 중개부터 서류대행, 초청, 번역공증까지</p></div></div>
         <div class="tiles stagger">
           <a class="tile" href="#cost-uz"><div class="illu"><span class="vcode">F-6</span><svg viewBox="0 0 48 48"><circle cx="18" cy="26" r="9"/><circle cx="30" cy="26" r="9"/><path d="M24 8l2 4h-4z"/></svg></div><h4>국제결혼 중개</h4><p>국가별 맞선 · 결혼식 · 처가 방문</p></a>
           <a class="tile" href="#special"><div class="illu"><span class="vcode">SPECIAL</span><svg viewBox="0 0 48 48"><path d="M8 38h32M12 38V24M20 38V16M28 38V20M36 38V10"/></svg></div><h4>특가결혼</h4><p>현지 만남은 직접, 서류비만으로 진행</p></a>
@@ -947,7 +1002,7 @@
     <!-- Process: boarding pass -->
     <section class="block" id="process" style="padding-top:0">
       <div class="container">
-        <div class="sec-head reveal"><div><span class="idx">03 — PROCESS</span><h2>상담부터 신부 입국까지, 한 장의 탑승권처럼</h2><p>국제결혼 진행 과정을 다섯 개의 게이트로 정리했습니다. 현지 일정과 양국 서류를 이화가 함께 챙깁니다.</p></div></div>
+        <div class="sec-head reveal"><div><span class="idx">04 — PROCESS</span><h2>상담부터 신부 입국까지, 한 장의 탑승권처럼</h2><p>국제결혼 진행 과정을 다섯 개의 게이트로 정리했습니다. 현지 일정과 양국 서류를 이화가 함께 챙깁니다.</p></div></div>
         <div class="pass reveal">
           <div class="pass-main">
             <div class="pass-top">
@@ -1007,7 +1062,7 @@
     <!-- Detail tabs -->
     <section class="block" id="detail" style="padding-top:0">
       <div class="container">
-        <div class="sec-head reveal"><div><span class="idx">04 — DOCUMENTS</span><h2>서류대행 안내</h2><p>이화를 통해 만나지 않은 부부도 서류만 맡기실 수 있습니다.</p></div></div>
+        <div class="sec-head reveal"><div><span class="idx">05 — DOCUMENTS</span><h2>서류대행 안내</h2><p>이화를 통해 만나지 않은 부부도 서류만 맡기실 수 있습니다.</p></div></div>
         <div class="seg" role="tablist">
           <button role="tab" aria-selected="true">국제결혼 서류대행</button>
           <button role="tab" aria-selected="false">초청</button>
@@ -1072,7 +1127,7 @@
     <!-- Location -->
     <section class="block" id="contact">
       <div class="container">
-        <div class="sec-head reveal"><div><span class="idx">05 — LOCATION</span><h2>찾아오시는 길</h2><p>서울 종로 진학회관 7층에 있습니다.</p></div></div>
+        <div class="sec-head reveal"><div><span class="idx">06 — LOCATION</span><h2>찾아오시는 길</h2><p>서울 종로 진학회관 7층에 있습니다.</p></div></div>
         <div class="loc reveal">
           <table class="data-table">
             <tr><th>ADDRESS</th><td>서울특별시 종로구 종로3길 38 진학회관 707호 (청진동)</td></tr>
