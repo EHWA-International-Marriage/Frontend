@@ -6,6 +6,7 @@
 - 페이지 이동은 주소 뒤의 `#` 이름으로 합니다. 예: `#vietnam`, `#employment`, `#notice`
 - 로컬에서 보기: `python3 -m http.server 8000` 실행 후 http://localhost:8000
 
-## GitHub Pages 배포
+## Netlify 배포
 
-Settings → Pages에서 Source를 `Deploy from a branch`, 브랜치 `main`, 폴더 `/ (root)`로 저장합니다.
+`netlify.toml`에 설정이 들어 있어 빌드 명령 없이 저장소 루트를 그대로 배포합니다.
+Netlify에서 이 GitHub 저장소를 연결하면 `main`에 push할 때마다 자동으로 다시 배포됩니다.
