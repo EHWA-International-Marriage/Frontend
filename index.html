@@ -34,8 +34,8 @@
     --success-bg: #e8ffea;
     --success-text: #1ba673;
 
-    --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
-    --r-xxxl: 24px; --r-hero: 32px; --r-full: 9999px;
+    --r-sm: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 10px;
+    --r-xxxl: 12px; --r-hero: 14px; --r-full: 9999px;
 
     --s-xxs: 4px; --s-xs: 8px; --s-sm: 12px; --s-md: 16px; --s-lg: 20px;
     --s-xl: 24px; --s-xxl: 32px; --s-xxxl: 40px; --s-section-sm: 48px;
@@ -100,7 +100,13 @@
     padding: var(--s-sm) var(--s-lg);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .promo-banner a { text-decoration: underline; text-underline-offset: 3px; margin-left: 8px; }
+  .promo-banner { text-align: left; padding-inline: 0; }
+  .pb-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--s-lg); }
+  .pb-msg { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .pb-msg a { text-decoration: underline; text-underline-offset: 3px; margin-left: 8px; }
+  .pb-links { flex: none; display: flex; gap: var(--s-md); font-size: 13px; }
+  .pb-links a { color: rgba(255,255,255,0.75); transition: color var(--ease); }
+  .pb-links a:hover { color: #fff; }
 
   /* ---------- Top nav ---------- */
   .topnav {
@@ -135,6 +141,30 @@
   .hero h1 .soft { color: var(--stone); }
   .hero p.lead { font-size: 18px; font-weight: 500; color: var(--steel); max-width: 640px; margin: var(--s-xl) auto 0; }
   .hero .cta-row { display: flex; gap: var(--s-sm); justify-content: center; margin-top: var(--s-xxl); flex-wrap: wrap; }
+
+  /* Photo cover hero (Apple-style): copy sits on the sky, couple walks below */
+  .hero.hero-photo { padding: 0; text-align: left; min-height: clamp(580px, 86vh, 860px); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; isolation: isolate; }
+  /* --p (0→1) is set from scroll: the photo drifts down and fades into the page as you leave the hero */
+  .hero.hero-photo { --p: 0; background: var(--canvas); }
+  .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 68%; z-index: -2;
+    opacity: calc(1 - var(--p) * 0.85); transform: translate3d(0, calc(var(--p) * 14%), 0) scale(calc(1 + var(--p) * 0.06)); will-change: transform, opacity;
+    animation: heroSettle 1600ms var(--ease-out) backwards; }
+  .hero-photo::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: calc(26% + var(--p) * 55%); z-index: -1; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 35%, rgba(255,255,255,0.8) 70%, var(--canvas) 100%); }
+  .hero-photo .hero-copy, .hero-photo .hero-foot { opacity: calc(1 - var(--p) * 1.6); transform: translate3d(0, calc(var(--p) * -36px), 0); }
+  @keyframes heroSettle { from { transform: scale(1.06); opacity: 0.6; } }
+  .hero-photo::before { content: ""; position: absolute; inset: 0; z-index: -1; background:
+      linear-gradient(180deg, rgba(247,246,243,0.72) 0%, rgba(247,246,243,0.18) 52%, rgba(0,0,0,0) 62%); }
+  .hero-photo > .container { width: 100%; }
+  .hero-copy { padding-top: var(--s-hero); }
+  .hero-photo h1 { margin: 0; max-width: 980px; }
+  .hero-photo h1 .soft { color: var(--slate); }
+  .hero-photo p.lead { margin: var(--s-xl) 0 0; max-width: 560px; color: var(--charcoal); }
+  .hero-photo .cta-row { justify-content: flex-start; }
+  .btn-glass { background: rgba(255,255,255,0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .hero-foot { display: flex; justify-content: space-between; gap: var(--s-md); padding-bottom: var(--s-xl); font-size: 13px; color: var(--slate); }
+  .hero-foot span:last-child { opacity: 0.7; }
+  .route-wrap .route-card { margin-top: var(--s-section-sm); }
 
   /* Floating passport stamps around hero */
   .stamp-float { position: absolute; pointer-events: none; opacity: 0.9; }
@@ -400,6 +430,10 @@
       linear-gradient(90deg, var(--hairline-soft) 1px, transparent 1px) 0 0 / 32px 32px,
       var(--surface);
   }
+  .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .loc .map { min-height: 340px; }
+  .loc-info { display: grid; gap: var(--s-md); align-content: start; }
+  .map-links { display: flex; flex-wrap: wrap; gap: var(--s-xs); }
   .map .road { position: absolute; background: var(--canvas); border: 1px solid var(--hairline); }
   .map .pin { position: absolute; left: 54%; top: 44%; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; gap: 6px; }
   .map .pin .label { background: var(--primary); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: var(--r-full); white-space: nowrap; }
@@ -460,6 +494,12 @@
     .container { padding-left: max(var(--s-md), env(safe-area-inset-left, 0px)); padding-right: max(var(--s-md), env(safe-area-inset-right, 0px)); }
     .hero { padding: var(--s-section) 0 var(--s-xl); }
     .hero h1 { font-size: 40px; letter-spacing: -1px; }
+    .hero.hero-photo { min-height: 600px; padding: 0; }
+    .hero-copy { padding-top: var(--s-section-sm); }
+    .hero-photo p.lead { font-size: 16px; }
+    .hero-foot { flex-direction: column; gap: 2px; font-size: 12px; }
+    .pb-msg { display: none; }
+    .pb-inner { justify-content: flex-end; }
     section.block { padding: var(--s-section-sm) 0; }
     .sec-head { flex-direction: column; align-items: flex-start; }
     .marquee { margin-top: var(--s-section-sm); padding: 16px 0; }
@@ -638,6 +678,38 @@
   .sample-note a { text-decoration: underline; text-underline-offset: 3px; }
   .notice-list .body { padding: 0 var(--s-xs) var(--s-lg) calc(48px + var(--s-md) + var(--s-xs)); font-size: 15px; color: var(--charcoal); line-height: 1.7; }
 
+  /* sign-up */
+  .join { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: var(--s-xl); align-items: start; }
+  .join-aside { position: sticky; top: 96px; min-height: 520px; border-radius: var(--r-hero); overflow: hidden; isolation: isolate; background: var(--primary); color: #fff; padding: var(--s-xxl); display: flex; flex-direction: column; justify-content: flex-end; gap: var(--s-xs); }
+  .join-aside img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; z-index: -2; }
+  .join-aside::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10,10,10,0.05) 30%, rgba(10,10,10,0.78) 100%); }
+  .join-aside .gate, .join-step .gate { font-family: var(--mono); font-size: 11px; letter-spacing: 1px; opacity: 0.8; }
+  .join-aside b { font-size: 24px; font-weight: 600; }
+  .join-aside ul { list-style: none; display: grid; gap: 6px; margin-top: var(--s-xs); font-size: 14px; }
+  .join-aside li::before { content: "✓"; margin-right: 8px; color: #8ff0b9; }
+  .join-form { border: 1px solid var(--hairline); border-radius: var(--r-xl); padding: var(--s-xxl); display: grid; gap: var(--s-xxl); }
+  .join-note { font-size: 13px; color: var(--slate); background: var(--surface); padding: var(--s-sm) var(--s-md); border-radius: var(--r-md); line-height: 1.6; }
+  .join-step .gate { color: var(--stone); opacity: 1; }
+  .join-step h3 { font-size: 20px; font-weight: 600; color: var(--ink); margin: 2px 0 var(--s-sm); }
+  .chk { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--hairline-soft); font-size: 15px; color: var(--charcoal); cursor: pointer; }
+  .chk.all { font-weight: 600; color: var(--ink); border-bottom-color: var(--ink); }
+  .chk input { width: 18px; height: 18px; accent-color: var(--ink); flex: none; }
+  .chk em { font-style: normal; font-size: 13px; color: var(--stone); }
+  .chk a { margin-left: auto; font-size: 13px; color: var(--steel); }
+  .fgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-md) var(--s-lg); }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: var(--slate); margin-bottom: 6px; }
+  .field input, .field select { width: 100%; height: 44px; padding: 0 var(--s-md); border: 1px solid var(--hairline); border-radius: var(--r-md); font: inherit; font-size: 15px; color: var(--ink); background: var(--canvas); }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--brand-blue-deep); box-shadow: 0 0 0 1px var(--brand-blue-deep); }
+  .field small { display: block; font-size: 12px; color: var(--stone); margin-top: 4px; }
+  .field.wide { grid-column: span 2; }
+  .join-msg { font-size: 14px; color: #d45656; margin: calc(var(--s-xl) * -1) 0 0; min-height: 1.4em; }
+  .join-submit { width: 100%; height: 48px; margin-top: calc(var(--s-lg) * -1); }
+  .join-done { background: var(--success-bg); border-radius: var(--r-xl); padding: var(--s-xl); display: grid; gap: var(--s-xs); justify-items: start; }
+  .join-done[hidden] { display: none; }
+  .join-done b { color: var(--success-text); font-size: 16px; }
+  .join-done p { font-size: 14px; color: var(--slate); }
+  .join-done .btn { margin-top: var(--s-xs); }
+
   /* subpage footer nav */
   .pn { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-sm); margin-top: var(--s-section-sm); }
   .pn a { border: 1px solid var(--hairline); border-radius: var(--r-lg); padding: var(--s-lg); transition: border-color var(--ease); }
@@ -655,6 +727,8 @@
     .subhero .pcard { min-height: 240px; max-width: 420px; }
     .subhero h1 { font-size: 44px; letter-spacing: -1px; }
     .linkgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .join { grid-template-columns: minmax(0, 1fr); }
+    .join-aside { position: relative; top: auto; min-height: 260px; }
   }
   @media (max-width: 767px) {
     .subhero { padding-block: var(--s-section-sm) var(--s-xxl); }
@@ -665,6 +739,9 @@
     .sub-cta .promo-cta { padding: var(--s-xl); }
     .notice-list details summary { grid-template-columns: 32px minmax(0, 1fr); }
     .notice-list .d { grid-column: 2; }
+    .join-form { padding: var(--s-xl) var(--s-lg); }
+    .fgrid { grid-template-columns: minmax(0, 1fr); }
+    .field.wide { grid-column: auto; }
     .notice-list a.board-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: var(--s-md); align-items: center; padding: var(--s-lg) var(--s-xs); transition: background var(--ease); }
   .notice-list a.board-row:hover { background: var(--surface); }
   .sample-note a { text-decoration: underline; text-underline-offset: 3px; }
@@ -693,7 +770,10 @@
     </defs>
   </svg>
 
-  <div class="promo-banner">다문화가정이 운영하는 국제결혼 정보회사 · 우즈베키스탄 · 키르기스스탄 · 러시아 · 중국 · 베트남<a href="#contact">빠른 상담 →</a></div>
+  <div class="promo-banner"><div class="container pb-inner">
+    <span class="pb-msg">다문화가정이 운영하는 국제결혼 정보회사 · 우즈베키스탄 · 키르기스스탄 · 러시아 · 중국 · 베트남<a href="#contact">빠른 상담 →</a></span>
+    <span class="pb-links"><a href="https://goodwed.kr/bbs/login.php" target="_blank" rel="noopener">로그인</a><a href="#signup">회원가입</a></span>
+  </div></div>
 
   <header class="topnav">
     <div class="container">
@@ -771,6 +851,9 @@
         <div class="drawer-group"><span>커뮤니티</span>
           <a href="#notice">알림방</a><a href="#community">상담게시판 · 자료실</a>
         </div>
+        <div class="drawer-group"><span>멤버</span>
+          <a href="#signup">회원가입</a><a href="https://goodwed.kr/bbs/login.php" target="_blank" rel="noopener">로그인 ↗</a>
+        </div>
         <a class="btn btn-primary drawer-cta" href="tel:0222693457">전화 상담 · 02-2269-3457</a>
       </div>
     </div>
@@ -778,13 +861,9 @@
 
   <main id="home">
     <!-- Hero -->
-    <section class="hero">
-      <div class="stamp-float sf-1" style="color:#ff5530"><svg width="120" height="120"><use href="#seal"/></svg></div>
-      <div class="stamp-float sf-2" style="color:#1456f0"><svg width="96" height="96"><use href="#seal"/></svg></div>
-      <div class="stamp-float sf-3" style="color:#a855f7"><svg width="72" height="72"><use href="#seal"/></svg></div>
-
-      <div class="container">
-        <div class="eyebrow"><span class="badge badge-success"><span class="live-dot"></span>국제결혼중개업 등록 서울-종로-국제-22-0001</span></div>
+    <section class="hero hero-photo">
+      <img class="hero-img" src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&amp;fit=crop&amp;w=2000&amp;q=80" alt="언덕 위를 손잡고 걷는 신랑 신부의 뒷모습" fetchpriority="high" />
+      <div class="container hero-copy">
         <h1>
           <span class="rotator" aria-live="polite"><span id="rot">우즈베키스탄</span></span><span class="soft">에서 만난 인연,</span><br/>
           혼인신고까지 이화.
@@ -792,9 +871,16 @@
         <p class="lead">부담 없는 만남, 멋진 만남, 좋은 만남. 개인의 여건과 희망하시는 상대를 고려한 맞선부터 양국 혼인신고와 신부 비자까지 함께합니다.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#contact">빠른 상담 신청 <span class="arrow">→</span></a>
-          <a class="btn btn-secondary" href="#cost-uz">비용 및 절차 보기</a>
+          <a class="btn btn-secondary btn-glass" href="#cost-uz">비용 및 절차 보기</a>
         </div>
+      </div>
+      <div class="container hero-foot">
+        <span>국제결혼중개업 등록 서울-종로-국제-22-0001 · 서울보증보험 가입</span>
+        <span>Photo · Unsplash</span>
+      </div>
+    </section>
 
+    <section class="container route-wrap">
         <!-- Route map + ticket -->
         <div class="route-card reveal">
           <div class="route-map">
@@ -856,7 +942,6 @@
             <div class="barcode"><i></i><small class="swap" id="t-code">IH-TAS-F6-22-0001</small></div>
           </aside>
         </div>
-      </div>
     </section>
 
     <!-- Visa code marquee -->
@@ -880,7 +965,7 @@
       <div class="container">
         <div class="sec-head reveal">
           <div>
-            <span class="idx">01 — MOMENTS</span>
+            
             <h2>만남에서 새 출발까지</h2>
             <p>맞선과 약속, 결혼식과 피로연까지 이화가 곁에서 함께합니다.</p>
           </div>
@@ -916,7 +1001,7 @@
       <div class="container">
         <div class="sec-head reveal">
           <div>
-            <span class="idx">02 — SERVICES</span>
+            
             <h2>이화가 하는 네 가지 일</h2>
             <p>만남 주선부터 혼인 서류, 처가 초청, 번역공증까지 한 곳에서 진행합니다. 카드를 눌러 자세히 보세요.</p>
           </div>
@@ -985,7 +1070,7 @@
     <!-- White tiles: all services -->
     <section class="block">
       <div class="container">
-        <div class="sec-head reveal"><div><span class="idx">03 — ALL SERVICES</span><h2>전체 업무 분야</h2><p>국제결혼 중개부터 서류대행, 초청, 번역공증까지</p></div></div>
+        <div class="sec-head reveal"><div><h2>전체 업무 분야</h2><p>국제결혼 중개부터 서류대행, 초청, 번역공증까지</p></div></div>
         <div class="tiles stagger">
           <a class="tile" href="#cost-uz"><div class="illu"><span class="vcode">F-6</span><svg viewBox="0 0 48 48"><circle cx="18" cy="26" r="9"/><circle cx="30" cy="26" r="9"/><path d="M24 8l2 4h-4z"/></svg></div><h4>국제결혼 중개</h4><p>국가별 맞선 · 결혼식 · 처가 방문</p></a>
           <a class="tile" href="#special"><div class="illu"><span class="vcode">SPECIAL</span><svg viewBox="0 0 48 48"><path d="M8 38h32M12 38V24M20 38V16M28 38V20M36 38V10"/></svg></div><h4>특가결혼</h4><p>현지 만남은 직접, 서류비만으로 진행</p></a>
@@ -1002,7 +1087,7 @@
     <!-- Process: boarding pass -->
     <section class="block" id="process" style="padding-top:0">
       <div class="container">
-        <div class="sec-head reveal"><div><span class="idx">04 — PROCESS</span><h2>상담부터 신부 입국까지, 한 장의 탑승권처럼</h2><p>국제결혼 진행 과정을 다섯 개의 게이트로 정리했습니다. 현지 일정과 양국 서류를 이화가 함께 챙깁니다.</p></div></div>
+        <div class="sec-head reveal"><div><h2>상담부터 신부 입국까지, 한 장의 탑승권처럼</h2><p>국제결혼 진행 과정을 다섯 개의 게이트로 정리했습니다. 현지 일정과 양국 서류를 이화가 함께 챙깁니다.</p></div></div>
         <div class="pass reveal">
           <div class="pass-main">
             <div class="pass-top">
@@ -1062,7 +1147,7 @@
     <!-- Detail tabs -->
     <section class="block" id="detail" style="padding-top:0">
       <div class="container">
-        <div class="sec-head reveal"><div><span class="idx">05 — DOCUMENTS</span><h2>서류대행 안내</h2><p>이화를 통해 만나지 않은 부부도 서류만 맡기실 수 있습니다.</p></div></div>
+        <div class="sec-head reveal"><div><h2>서류대행 안내</h2><p>이화를 통해 만나지 않은 부부도 서류만 맡기실 수 있습니다.</p></div></div>
         <div class="seg" role="tablist">
           <button role="tab" aria-selected="true">국제결혼 서류대행</button>
           <button role="tab" aria-selected="false">초청</button>
@@ -1127,18 +1212,22 @@
     <!-- Location -->
     <section class="block" id="contact">
       <div class="container">
-        <div class="sec-head reveal"><div><span class="idx">06 — LOCATION</span><h2>찾아오시는 길</h2><p>서울 종로 진학회관 7층에 있습니다.</p></div></div>
+        <div class="sec-head reveal"><div><h2>찾아오시는 길</h2><p>서울 종로 진학회관 7층에 있습니다.</p></div></div>
         <div class="loc reveal">
-          <table class="data-table">
-            <tr><th>ADDRESS</th><td>서울특별시 종로구 종로3길 38 진학회관 707호 (청진동)</td></tr>
-            <tr><th>PHONE</th><td>TEL. 02-2269-3457</td></tr>
-            <tr><th>EMAIL</th><td>gdwed337@naver.com</td></tr>
-            <tr><th>BLOG</th><td><a href="https://naver.me/5tfDDmso" target="_blank" rel="noopener">네이버 블로그 ↗</a></td></tr>
-          </table>
-          <div class="map" aria-label="위치 약도">
-            <div class="road" style="left:0;right:0;top:52%;height:18px"></div>
-            <div class="road" style="top:0;bottom:0;left:38%;width:18px"></div>
-            <div class="pin"><span class="label">이화국제결혼</span><span class="dot"></span></div>
+          <div class="loc-info">
+            <table class="data-table">
+              <tr><th>ADDRESS</th><td>서울특별시 종로구 종로3길 38 진학회관 707호 (청진동)</td></tr>
+              <tr><th>PHONE</th><td>TEL. 02-2269-3457</td></tr>
+              <tr><th>EMAIL</th><td>gdwed337@naver.com</td></tr>
+              <tr><th>BLOG</th><td><a href="https://naver.me/5tfDDmso" target="_blank" rel="noopener">네이버 블로그 ↗</a></td></tr>
+            </table>
+            <div class="map-links">
+              <a class="btn btn-tertiary" href="https://map.kakao.com/link/search/%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EC%A2%85%EB%A1%9C3%EA%B8%B8%2038" target="_blank" rel="noopener">카카오맵 길찾기 ↗</a>
+              <a class="btn btn-tertiary" href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EC%A2%85%EB%A1%9C3%EA%B8%B8%2038" target="_blank" rel="noopener">네이버지도 길찾기 ↗</a>
+            </div>
+          </div>
+          <div class="map">
+            <iframe title="이화국제결혼 위치 지도 (서울 종로구 종로3길 38 진학회관)" src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EC%A2%85%EB%A1%9C3%EA%B8%B8%2038&amp;hl=ko&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
           </div>
         </div>
         <p class="closing reveal">언제나 한결같은 마음과 신뢰로<br/><span class="soft">여러분의 행복한 만남을 돕겠습니다.</span></p>
@@ -1744,6 +1833,13 @@
       ],
     },
 
+    signup: {
+      nav: '회원가입', group: '멤버', title: '회원가입', short: '회원가입',
+      code: 'JOIN', kicker: '멤버', card: 'pc-coral', mrz: 'P<KORIHWA<<MEMBER<<JOIN<<<<<<<<<<<',
+      lead: '회원이 되시면 국가별 결혼스토리와 회원 전용 비용 안내를 보시고, 상담게시판에 글을 남기실 수 있습니다.',
+      sections: [{ type: 'signup', id: 'join' }],
+    },
+
     community: {
       nav: '상담게시판 · 자료실', group: '커뮤니티', title: '상담게시판 · 자료실', short: '커뮤니티',
       code: 'TALK', kicker: '커뮤니티', card: 'pc-dark', mrz: 'V<KORCOMMUNITY<<IHWA<<<<<<<<<<<',
@@ -1775,6 +1871,51 @@
       case 'compare': body = `<div class="compare">${s.items.map(([tag, t, list]) => `<div class="cmp"><span class="tag">${esc(tag)}</span><h3>${esc(t)}</h3><ul>${list.map(li => `<li>${esc(li)}</li>`).join('')}</ul></div>`).join('')}</div>`; break;
       case 'table': body = `<div class="doc-table-wrap"><table class="doc-table"><thead><tr>${s.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`; break;
       case 'list': body = `<ul class="blist">${s.items.map(li => `<li>${CHECK}<span>${esc(li)}</span></li>`).join('')}</ul>`; break;
+      case 'signup': body = `
+        <div class="join">
+          <aside class="join-aside">
+            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="분홍 장미 부케 위에 놓인 결혼반지" loading="lazy" />
+            <span class="gate">MEMBERSHIP</span>
+            <b>회원이 되시면</b>
+            <ul>
+              <li>국가별 결혼스토리 열람</li>
+              <li>회원 전용 비용 상세 안내</li>
+              <li>상담게시판 글쓰기와 답변 확인</li>
+            </ul>
+          </aside>
+          <form class="join-form" id="joinForm" novalidate>
+            <p class="join-note">회원 가입은 현재 기존 이화국제결혼 홈페이지(goodwed.kr)에서 처리됩니다. 이 페이지에 입력하신 정보는 전송되거나 저장되지 않습니다.</p>
+            <div class="join-step">
+              <span class="gate">STEP 01</span>
+              <h3>약관 동의</h3>
+              <label class="chk all"><input type="checkbox" id="agreeAll" /> 전체 동의</label>
+              <label class="chk"><input type="checkbox" id="agree1" class="agree" required /> 회원가입약관 동의 <em>(필수)</em><a href="https://goodwed.kr/pages.php?id=97" target="_blank" rel="noopener">보기 ↗</a></label>
+              <label class="chk"><input type="checkbox" id="agree2" class="agree" required /> 개인정보처리방침 동의 <em>(필수)</em><a href="https://goodwed.kr/pages.php?id=95" target="_blank" rel="noopener">보기 ↗</a></label>
+              <label class="chk"><input type="checkbox" id="agree3" class="agree" /> 국제결혼표준약관 확인 <em>(선택)</em><a href="https://goodwed.kr/pages.php?id=98" target="_blank" rel="noopener">보기 ↗</a></label>
+            </div>
+            <div class="join-step">
+              <span class="gate">STEP 02</span>
+              <h3>정보 입력</h3>
+              <div class="fgrid">
+                <div class="field"><label for="mbId">아이디</label><input id="mbId" autocomplete="username" required minlength="3" pattern="[A-Za-z0-9_]+" /><small>영문, 숫자, _ 3자 이상</small></div>
+                <div class="field"><label for="mbName">이름</label><input id="mbName" autocomplete="name" required /></div>
+                <div class="field"><label for="mbPw">비밀번호</label><input id="mbPw" type="password" autocomplete="new-password" required minlength="6" /><small>6자 이상</small></div>
+                <div class="field"><label for="mbPw2">비밀번호 확인</label><input id="mbPw2" type="password" autocomplete="new-password" required /></div>
+                <div class="field"><label for="mbHp">휴대폰 번호</label><input id="mbHp" type="tel" autocomplete="tel" placeholder="010-0000-0000" required /></div>
+                <div class="field"><label for="mbEmail">이메일</label><input id="mbEmail" type="email" autocomplete="email" required /></div>
+                <div class="field wide"><label for="mbCountry">관심 국가</label>
+                  <select id="mbCountry"><option>아직 정하지 않았어요</option><option>우즈베키스탄</option><option>키르기스스탄</option><option>카자흐스탄</option><option>러시아</option><option>중국</option><option>베트남</option></select></div>
+              </div>
+            </div>
+            <p class="join-msg" id="joinMsg" role="alert"></p>
+            <button class="btn btn-primary join-submit" type="submit">회원가입</button>
+            <div class="join-done" id="joinDone" hidden role="status">
+              <b>입력하신 내용에 문제가 없습니다</b>
+              <p>가입은 기존 이화국제결혼 홈페이지에서 마무리됩니다. 아래 버튼을 눌러 같은 내용으로 가입해 주세요.</p>
+              <a class="btn btn-primary" href="https://goodwed.kr/bbs/register.php" target="_blank" rel="noopener">기존 홈페이지에서 가입하기 ↗</a>
+            </div>
+          </form>
+        </div>`; break;
       case 'callout': return `<div class="callout"><span class="ic">!</span><div><b>${esc(s.title)}</b><p>${esc(s.text)}</p></div></div>`;
       case 'note': return `<p class="sample-note">※ ${esc(s.text)}</p>`;
       case 'links': body = `<div class="linkgrid">${s.keys.map(k => { const p = PAGES[k]; return `<a class="lg-item" href="#${k}"><span class="iata">${esc(p.code)}</span><b>${esc(p.short)}</b><small>${esc(p.kicker)}</small><span class="go">자세히 보기 →</span></a>`; }).join('')}</div>`; break;
@@ -1807,7 +1948,7 @@
           <p class="lead">${esc(p.lead)}</p>
           <div class="cta-row">
             <a class="btn btn-primary" href="#contact">빠른 상담 신청 <span class="arrow">→</span></a>
-            <a class="btn btn-secondary" href="#s-${titled[0] ? titled[0].id : ''}">${titled[0] ? esc(titled[0].title) : '내용 보기'}</a>
+            <a class="btn btn-secondary" href="#s-${titled[0] ? titled[0].id : p.sections[0].id}">${titled[0] ? esc(titled[0].title) : '아래로 보기'}</a>
           </div>
         </div>
         <div class="pcard ${p.card}">
@@ -1826,10 +1967,10 @@
             <div><h2>${esc(p.short)}, 지금 상담받으세요</h2><p>희망하시는 국가와 상황을 말씀해 주시면 비용과 일정을 바로 안내해 드립니다.</p></div>
             <div class="btns"><a class="btn btn-tertiary" href="tel:0222693457">02-2269-3457</a><a class="btn btn-ghost-light" href="mailto:gdwed337@naver.com">gdwed337@naver.com</a></div>
           </div></div>
-          <nav class="pn" aria-label="이전 다음 업무">
+          ${i < 0 ? '' : `<nav class="pn" aria-label="이전 다음 업무">
             <a href="#${prevKey}"><small>← 이전</small><b>${esc(prev.short)}</b></a>
             <a class="next" href="#${nextKey}"><small>다음 →</small><b>${esc(next.short)}</b></a>
-          </nav>
+          </nav>`}
         </article>
       </div>`;
 
@@ -1899,6 +2040,44 @@
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href^="#"]');
     if (a && a.getAttribute('href') === location.hash) { e.preventDefault(); route(); }
+  });
+
+  // Hero photo fades out as the page scrolls past it
+  (() => {
+    const hero = document.querySelector('.hero-photo');
+    if (!hero || reduced) return;
+    let queued = false;
+    const update = () => {
+      queued = false;
+      if (home.hidden) return;
+      const p = Math.min(1, Math.max(0, scrollY / (hero.offsetHeight * 0.85)));
+      hero.style.setProperty('--p', p.toFixed(3));
+    };
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+    addEventListener('hashchange', () => requestAnimationFrame(update));
+    update();
+  })();
+
+  // Sign-up form: validates locally, never sends data anywhere
+  document.addEventListener('change', e => {
+    if (e.target.id === 'agreeAll') document.querySelectorAll('#joinForm .agree').forEach(c => (c.checked = e.target.checked));
+    else if (e.target.classList && e.target.classList.contains('agree')) {
+      const all = [...document.querySelectorAll('#joinForm .agree')];
+      document.getElementById('agreeAll').checked = all.every(c => c.checked);
+    }
+  });
+  document.addEventListener('submit', e => {
+    if (e.target.id !== 'joinForm') return;
+    e.preventDefault();
+    const f = e.target, msg = document.getElementById('joinMsg'), done = document.getElementById('joinDone');
+    const say = (text, el) => { msg.textContent = text; done.hidden = true; if (el) el.focus(); };
+    if (!f.querySelector('#agree1').checked || !f.querySelector('#agree2').checked) return say('필수 약관 두 가지에 동의해 주세요.', f.querySelector('#agree1'));
+    const bad = [...f.querySelectorAll('input[required]:not([type=checkbox])')].find(el => !el.checkValidity());
+    if (bad) return say(`'${f.querySelector(`label[for="${bad.id}"]`).textContent}' 항목을 확인해 주세요.`, bad);
+    if (f.querySelector('#mbPw').value !== f.querySelector('#mbPw2').value) return say('비밀번호와 비밀번호 확인이 다릅니다.', f.querySelector('#mbPw2'));
+    msg.textContent = '';
+    done.hidden = false;
+    done.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
   });
 
   if (location.hash) route();
