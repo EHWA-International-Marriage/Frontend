@@ -430,6 +430,18 @@
       linear-gradient(90deg, var(--hairline-soft) 1px, transparent 1px) 0 0 / 32px 32px,
       var(--surface);
   }
+  .transit { display: grid; grid-template-columns: 1fr 1fr 2fr; gap: var(--s-md); margin-top: var(--s-md); }
+  .tr-col { border: 1px solid var(--hairline); border-radius: var(--r-xl); padding: var(--s-xl); }
+  .tr-col h3 { font-size: 13px; font-weight: 600; color: var(--steel); letter-spacing: 0.5px; margin-bottom: var(--s-sm); }
+  .tr-list { list-style: none; display: grid; gap: 10px; font-size: 15px; color: var(--ink); }
+  .tr-list li { display: flex; align-items: center; gap: 10px; }
+  .line { width: 22px; height: 22px; border-radius: 50%; color: #fff; font-size: 12px; font-weight: 700; display: grid; place-items: center; flex: none; }
+  .l1 { background: #0052a4; } .l3 { background: #ef7c1c; } .l5 { background: #996cac; }
+  .bus-row { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: var(--s-sm); align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--hairline-soft); }
+  .bus-row:last-child { border-bottom: 0; }
+  .bus-type { font-size: 12px; font-weight: 700; color: #fff; border-radius: var(--r-full); padding: 2px 0; text-align: center; }
+  .t-blue { background: #0068b7; } .t-green { background: #53b332; } .t-yellow { background: #f2b70a; color: var(--ink); } .t-red { background: #e60012; }
+  .bus-row .nums { font-size: 14px; color: var(--charcoal); line-height: 1.7; font-variant-numeric: tabular-nums; }
   .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .loc .map { min-height: 340px; }
   .loc-info { display: grid; gap: var(--s-md); align-content: start; }
@@ -481,6 +493,8 @@
     .moments { grid-template-columns: 1fr 1fr; grid-template-rows: 320px 220px 220px; }
     .moment.big { grid-row: auto; grid-column: span 2; }
     .about, .loc { grid-template-columns: 1fr; }
+    .transit { grid-template-columns: 1fr 1fr; }
+    .tr-bus { grid-column: span 2; }
     .panel { grid-template-columns: 1fr; }
     .pass { grid-template-columns: 1fr; }
     .pass-stub { border-left: 0; border-top: 2px dashed var(--hairline); flex-direction: row; gap: var(--s-xl); align-items: center; }
@@ -710,6 +724,17 @@
   .join-done p { font-size: 14px; color: var(--slate); }
   .join-done .btn { margin-top: var(--s-xs); }
 
+  /* login */
+  .subhero-plain { padding-block: var(--s-section-sm) var(--s-xl); }
+  .subhero-plain .container { grid-template-columns: minmax(0, 1fr); }
+  .login-card { max-width: 420px; display: grid; gap: var(--s-lg); border: 1px solid var(--hairline); border-radius: var(--r-xl); padding: var(--s-xxl); }
+  .chk.plain { border-bottom: 0; padding: 0; font-size: 14px; }
+  .login-msg { font-size: 14px; color: #d45656; min-height: 1.4em; margin: calc(var(--s-sm) * -1) 0; }
+  .login-card .join-submit { margin-top: 0; }
+  .login-links { display: flex; justify-content: space-between; gap: var(--s-md); font-size: 14px; color: var(--steel); }
+  .login-links a:hover { color: var(--ink); }
+  .login-note { font-size: 12px; color: var(--stone); line-height: 1.6; }
+
   /* subpage footer nav */
   .pn { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-sm); margin-top: var(--s-section-sm); }
   .pn a { border: 1px solid var(--hairline); border-radius: var(--r-lg); padding: var(--s-lg); transition: border-color var(--ease); }
@@ -741,6 +766,9 @@
     .notice-list .d { grid-column: 2; }
     .join-form { padding: var(--s-xl) var(--s-lg); }
     .fgrid { grid-template-columns: minmax(0, 1fr); }
+    .transit { grid-template-columns: minmax(0, 1fr); }
+    .tr-bus { grid-column: auto; }
+    .login-card { padding: var(--s-xl) var(--s-lg); }
     .field.wide { grid-column: auto; }
     .notice-list a.board-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: var(--s-md); align-items: center; padding: var(--s-lg) var(--s-xs); transition: background var(--ease); }
   .notice-list a.board-row:hover { background: var(--surface); }
@@ -762,7 +790,7 @@
         <circle cx="75" cy="75" r="72" fill="none" stroke="currentColor" stroke-width="3" />
         <circle cx="75" cy="75" r="64" fill="none" stroke="currentColor" stroke-width="1" />
         <text font-family="DM Sans, sans-serif" font-size="12.5" font-weight="700" letter-spacing="2.2" fill="currentColor">
-          <textPath href="#sealCircle">IHWA · MARRIAGE · SEOUL · KOREA ·</textPath>
+          <textPath href="#sealCircle">EHWA · MARRIAGE · SEOUL · KOREA ·</textPath>
         </text>
         <circle cx="75" cy="75" r="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 4" />
         <path d="M55 80 l12 -2 l18 -16 c3 -3 8 -2 6 2 l-16 18 l-2 12 l-4 2 l-2 -10 l-8 4 l-2 4 l-3 -1 l1 -6 l-6 -2z" fill="currentColor" />
@@ -772,14 +800,14 @@
 
   <div class="promo-banner"><div class="container pb-inner">
     <span class="pb-msg">다문화가정이 운영하는 국제결혼 정보회사 · 우즈베키스탄 · 키르기스스탄 · 러시아 · 중국 · 베트남<a href="#contact">빠른 상담 →</a></span>
-    <span class="pb-links"><a href="https://goodwed.kr/bbs/login.php" target="_blank" rel="noopener">로그인</a><a href="#signup">회원가입</a></span>
+    <span class="pb-links"><a href="#login">로그인</a><a href="#signup">회원가입</a></span>
   </div></div>
 
   <header class="topnav">
     <div class="container">
       <a class="wordmark" href="#home">
         <span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M2 14l8-1 7-7c1.5-1.5 4-1 3 1l-7 7-1 8-2 1-1.5-6-4 2-1 2-1.5-.5.5-3z"/></svg></span>
-        <b>IHWA 이화</b><span>국제결혼</span>
+        <b>EHWA 이화</b><span>국제결혼</span>
       </a>
       <nav class="navlinks" aria-label="주 메뉴">
         <div class="dd">
@@ -852,7 +880,7 @@
           <a href="#notice">알림방</a><a href="#community">상담게시판 · 자료실</a>
         </div>
         <div class="drawer-group"><span>멤버</span>
-          <a href="#signup">회원가입</a><a href="https://goodwed.kr/bbs/login.php" target="_blank" rel="noopener">로그인 ↗</a>
+          <a href="#login">로그인</a><a href="#signup">회원가입</a>
         </div>
         <a class="btn btn-primary drawer-cta" href="tel:0222693457">전화 상담 · 02-2269-3457</a>
       </div>
@@ -939,7 +967,7 @@
               <div><dt class="lbl">Status</dt><dd style="color:#1ba673">상담 가능</dd></div>
             </dl>
             <a class="btn btn-tertiary ticket-link" id="t-link" href="#cost-uz">비용 및 절차 보기 <span class="arrow">→</span></a>
-            <div class="barcode"><i></i><small class="swap" id="t-code">IH-TAS-F6-22-0001</small></div>
+            <div class="barcode"><i></i><small class="swap" id="t-code">EH-TAS-F6-22-0001</small></div>
           </aside>
         </div>
     </section>
@@ -1014,7 +1042,7 @@
             <div class="code">F-6</div>
             <h3>맞선부터 결혼식까지</h3>
             <p>현지 맞선, 처가 방문, 결혼식 진행</p>
-            <div class="mrz">V&lt;KORF6&lt;&lt;MARRIAGE&lt;&lt;IHWA&lt;&lt;&lt;&lt;</div>
+            <div class="mrz">V&lt;KORF6&lt;&lt;MARRIAGE&lt;&lt;EHWA&lt;&lt;&lt;&lt;</div>
           </a>
           <a class="pcard pc-blue" href="#documents">
             <svg class="seal"><use href="#seal"/></svg>
@@ -1022,7 +1050,7 @@
             <div class="code">DOC</div>
             <h3>양국 혼인신고 · 신부 비자</h3>
             <p>지인 소개로 만난 부부도 서류만 진행</p>
-            <div class="mrz">V&lt;KORDOC&lt;&lt;DOCUMENTS&lt;&lt;IHWA&lt;&lt;&lt;</div>
+            <div class="mrz">V&lt;KORDOC&lt;&lt;DOCUMENTS&lt;&lt;EHWA&lt;&lt;&lt;</div>
           </a>
           <a class="pcard pc-purple" href="#invitation">
             <svg class="seal"><use href="#seal"/></svg>
@@ -1030,7 +1058,7 @@
             <div class="code">C-3</div>
             <h3>처가 · 가족 초청</h3>
             <p>장모 · 장인과 처가 가족 초청 서류</p>
-            <div class="mrz">V&lt;KORC3&lt;&lt;INVITATION&lt;&lt;IHWA&lt;&lt;&lt;</div>
+            <div class="mrz">V&lt;KORC3&lt;&lt;INVITATION&lt;&lt;EHWA&lt;&lt;&lt;</div>
           </a>
           <a class="pcard pc-magenta" href="#documents">
             <svg class="seal"><use href="#seal"/></svg>
@@ -1038,7 +1066,7 @@
             <div class="code">TR</div>
             <h3>번역 및 공증</h3>
             <p>러시아어 · 영어 · 베트남어 · 중국어 등</p>
-            <div class="mrz">V&lt;KORTR&lt;&lt;TRANSLATION&lt;&lt;IHWA&lt;&lt;&lt;</div>
+            <div class="mrz">V&lt;KORTR&lt;&lt;TRANSLATION&lt;&lt;EHWA&lt;&lt;&lt;</div>
           </a>
         </div>
       </div>
@@ -1091,7 +1119,7 @@
         <div class="pass reveal">
           <div class="pass-main">
             <div class="pass-top">
-              <div class="airline"><span class="wordmark"><span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M2 14l8-1 7-7c1.5-1.5 4-1 3 1l-7 7-1 8-2 1-1.5-6-4 2-1 2-1.5-.5.5-3z"/></svg></span></span>IHWA AIR</div>
+              <div class="airline"><span class="wordmark"><span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M2 14l8-1 7-7c1.5-1.5 4-1 3 1l-7 7-1 8-2 1-1.5-6-4 2-1 2-1.5-.5.5-3z"/></svg></span></span>EHWA AIR</div>
               <span class="lbl">Boarding Pass · 탑승권</span>
             </div>
             <div class="steps">
@@ -1121,7 +1149,7 @@
     <section class="block" id="about" style="padding-top:0">
       <div class="container about reveal">
         <div class="card-feature">
-          <span class="badge badge-beta">ABOUT IHWA</span>
+          <span class="badge badge-beta">ABOUT EHWA</span>
           <h2 style="margin-top:16px">다문화가정이 운영하는<br/>국제결혼 정보회사, 이화</h2>
           <p>행복한 가정을 꾸릴 믿음직한 배우자를 주선합니다. 개인의 여건과 상황, 희망하시는 상대를 고려해 다양한 만남의 기회를 드리고, 진실되고 나에게 꼭 맞는 상대를 찾도록 돕습니다.</p>
           <p>선택의 폭은 넓히고 실패의 가능성은 줄여, 좋은 인연과 새 삶을 시작하실 수 있도록 한결같은 마음과 신뢰로 최선을 다하겠습니다.</p>
@@ -1130,7 +1158,7 @@
             <defs><path id="apCircle" d="M75,75 m-51,0 a51,51 0 1,1 102,0 a51,51 0 1,1 -102,0"/></defs>
             <circle cx="75" cy="75" r="71" fill="none" stroke="currentColor" stroke-width="4"/>
             <circle cx="75" cy="75" r="63" fill="none" stroke="currentColor" stroke-width="1.2"/>
-            <text font-family="DM Sans, sans-serif" font-size="11.5" font-weight="700" letter-spacing="2.4" fill="currentColor"><textPath href="#apCircle">VISA GRANTED · 국제결혼 · IHWA ·</textPath></text>
+            <text font-family="DM Sans, sans-serif" font-size="11.5" font-weight="700" letter-spacing="2.4" fill="currentColor"><textPath href="#apCircle">VISA GRANTED · 국제결혼 · EHWA ·</textPath></text>
             <rect x="33" y="62" width="84" height="26" fill="#f7f8fa" stroke="currentColor" stroke-width="2.5"/>
             <text x="75" y="80" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="currentColor">APPROVED</text>
           </svg></div>
@@ -1217,7 +1245,7 @@
           <div class="loc-info">
             <table class="data-table">
               <tr><th>ADDRESS</th><td>서울특별시 종로구 종로3길 38 진학회관 707호 (청진동)</td></tr>
-              <tr><th>PHONE</th><td>TEL. 02-2269-3457</td></tr>
+              <tr><th>PHONE</th><td>TEL. 02-2269-3457 · 010-4519-3569</td></tr>
               <tr><th>EMAIL</th><td>gdwed337@naver.com</td></tr>
               <tr><th>BLOG</th><td><a href="https://naver.me/5tfDDmso" target="_blank" rel="noopener">네이버 블로그 ↗</a></td></tr>
             </table>
@@ -1228,6 +1256,29 @@
           </div>
           <div class="map">
             <iframe title="이화국제결혼 위치 지도 (서울 종로구 종로3길 38 진학회관)" src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EC%A2%85%EB%A1%9C3%EA%B8%B8%2038&amp;hl=ko&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="transit reveal">
+          <div class="tr-col">
+            <h3>지하철</h3>
+            <ul class="tr-list">
+              <li><span class="line l5">5</span>광화문역</li>
+              <li><span class="line l1">1</span>종각역</li>
+              <li><span class="line l3">3</span>경복궁역</li>
+            </ul>
+          </div>
+          <div class="tr-col">
+            <h3>주변 정류장</h3>
+            <ul class="tr-list"><li>KT광화문지사</li><li>종로1가</li><li>광화문</li><li>세종문화회관</li></ul>
+          </div>
+          <div class="tr-col tr-bus">
+            <h3>버스</h3>
+            <div class="bus-row"><span class="bus-type t-blue">간선</span><span class="nums">101 · 103 · 109 · 150 · 160 · 260 · 270 · 271 · 273 · 370 · 401 · 406 · 470 · 501 · 601 · 606 · 700 · 704 · 707 · 708 · 720 · 721 · 741 · N26 · N37 (심야)</span></div>
+            <div class="bus-row"><span class="bus-type t-green">지선</span><span class="nums">1020 · 1711 · 7016 · 7018 · 7022 · 7212</span></div>
+            <div class="bus-row"><span class="bus-type t-yellow">순환</span><span class="nums">04 · TOUR11</span></div>
+            <div class="bus-row"><span class="bus-type t-green">마을</span><span class="nums">종로09 · 종로11</span></div>
+            <div class="bus-row"><span class="bus-type t-red">광역</span><span class="nums">9401 · 9703</span></div>
+            <div class="bus-row"><span class="bus-type t-red">직행</span><span class="nums">5000A · 5000B · 5005 · 5500-2 · 9000 · 9000-1 (출근용) · 9200</span></div>
           </div>
         </div>
         <p class="closing reveal">언제나 한결같은 마음과 신뢰로<br/><span class="soft">여러분의 행복한 만남을 돕겠습니다.</span></p>
@@ -1241,7 +1292,7 @@
     <div class="container">
       <div class="foot-top">
         <div>
-          <div class="wordmark"><span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0a0a0a"><path d="M2 14l8-1 7-7c1.5-1.5 4-1 3 1l-7 7-1 8-2 1-1.5-6-4 2-1 2-1.5-.5.5-3z"/></svg></span><b>IHWA 이화</b></div>
+          <div class="wordmark"><span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0a0a0a"><path d="M2 14l8-1 7-7c1.5-1.5 4-1 3 1l-7 7-1 8-2 1-1.5-6-4 2-1 2-1.5-.5.5-3z"/></svg></span><b>EHWA 이화</b></div>
           <p class="tag">다문화가정이 운영하는 국제결혼 정보회사</p>
         </div>
         <a class="btn btn-tertiary" href="#contact">빠른 상담</a>
@@ -1252,7 +1303,7 @@
         <div><h6>서류대행</h6><a href="#documents">서류대행 안내</a><a href="#invitation">처가 · 가족 초청</a><a href="#nationality">국적 취득</a><a href="#vietnam">국가별 혼인 서류</a></div>
         <div><h6>커뮤니티</h6><a href="#story">결혼스토리</a><a href="#couples">성혼커플</a><a href="#notice">알림방</a><a href="#community">상담게시판 · 자료실</a><a href="https://naver.me/5tfDDmso" target="_blank" rel="noopener">블로그 ↗</a></div>
       </div>
-      <div class="foot-mrz" aria-hidden="true">P&lt;KORIHWA&lt;&lt;INTERNATIONAL&lt;MARRIAGE&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br/>22&lt;0001&lt;&lt;SEOUL&lt;JONGNO3GIL&lt;38&lt;&lt;707&lt;&lt;&lt;&lt;</div>
+      <div class="foot-mrz" aria-hidden="true">P&lt;KOREHWA&lt;&lt;INTERNATIONAL&lt;MARRIAGE&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br/>22&lt;0001&lt;&lt;SEOUL&lt;JONGNO3GIL&lt;38&lt;&lt;707&lt;&lt;&lt;&lt;</div>
       <p class="foot-bottom">이화국제결혼 · 대표 임지상 · 사업자등록번호 566-05-00714 · 국제결혼중개업 등록번호 서울-종로-국제-22-0001 · 개인정보관리자 임지상<br/>서울특별시 종로구 종로3길 38 진학회관 707호 · 전화 02-2269-3457 · 이메일 gdwed337@naver.com</p>
     </div>
   </footer>
@@ -1307,7 +1358,7 @@
       setTimeout(() => {
         from.textContent = data[k][0];
         fromc.textContent = data[k][1];
-        code.textContent = `IH-${data[k][0]}-F6-22-0001`;
+        code.textContent = `EH-${data[k][0]}-F6-22-0001`;
         document.getElementById('t-link').href = '#' + data[k][2];
         [from, fromc, code].forEach(n => n.classList.remove('fade'));
       }, 180);
@@ -1435,7 +1486,7 @@
   const OLD = {
     vietnam: {
       nav: '베트남', group: '국제결혼', title: '베트남 국제결혼', short: '베트남',
-      code: 'F-6', kicker: '베트남 · HAN', card: 'pc-coral', mrz: 'V<VNMF6<<HANOI<<ICN<<IHWA<<<<',
+      code: 'F-6', kicker: '베트남 · HAN', card: 'pc-coral', mrz: 'V<VNMF6<<HANOI<<ICN<<EHWA<<<<',
       lead: '베트남 서류의 번역공증과 외교부 인증, 주한 베트남대사관 혼인요건인증서, 양국 혼인신고, 주베트남 대사관 F-6 신청까지 진행합니다.',
       sections: [
         { type: 'prose', id: 'way', title: '진행 방식', paras: ['혼인신고는 한국에서 먼저 하는 방식과 베트남에서 먼저 하는 방식이 있습니다. 부부의 일정과 체류 상황에 맞춰 고르며, 아래는 한국에서 먼저 신고하는 경우입니다.'] },
@@ -1452,7 +1503,7 @@
 
     philippines: {
       nav: '필리핀', group: '국제결혼', title: '필리핀 국제결혼', short: '필리핀',
-      code: 'F-6', kicker: '필리핀 · MNL', card: 'pc-coral', mrz: 'V<PHLF6<<MANILA<<ICN<<IHWA<<<',
+      code: 'F-6', kicker: '필리핀 · MNL', card: 'pc-coral', mrz: 'V<PHLF6<<MANILA<<ICN<<EHWA<<<',
       lead: '혼인요건 구비증명서(LCCM), 현지 혼인허가, PSA 등록, CFO 출국 전 교육까지 필리핀에만 있는 절차를 빠짐없이 챙깁니다.',
       sections: [
         { type: 'steps', id: 'flow', title: '진행 절차', sub: '필리핀 선혼인신고 기준', items: [
@@ -1469,7 +1520,7 @@
 
     china: {
       nav: '중국', group: '국제결혼', title: '중국 국제결혼', short: '중국',
-      code: 'F-6', kicker: '중국 · PEK', card: 'pc-coral', mrz: 'V<CHNF6<<BEIJING<<ICN<<IHWA<<',
+      code: 'F-6', kicker: '중국 · PEK', card: 'pc-coral', mrz: 'V<CHNF6<<BEIJING<<ICN<<EHWA<<',
       lead: '한국 선신고와 중국 선신고 중 부부에게 유리한 방식을 고르고, 공증·인증과 주중 공관 F-6 심사까지 준비합니다.',
       sections: [
         { type: 'compare', id: 'methods', title: '두 가지 신고 방식', sub: '부부가 어디에 머무르고 있는지에 따라 유리한 쪽이 달라집니다.', items: [
@@ -1491,7 +1542,7 @@
 
     thailand: {
       nav: '태국', group: '국제결혼', title: '태국 국제결혼', short: '태국',
-      code: 'F-6', kicker: '태국 · BKK', card: 'pc-coral', mrz: 'V<THAF6<<BANGKOK<<ICN<<IHWA<<',
+      code: 'F-6', kicker: '태국 · BKK', card: 'pc-coral', mrz: 'V<THAF6<<BANGKOK<<ICN<<EHWA<<',
       lead: '암퍼(구청) 서류의 번역과 태국 외교부 인증부터 양국 혼인신고, 주태국 대사관 F-6 심사 대비까지 진행합니다.',
       sections: [
         { type: 'steps', id: 'flow', title: '진행 절차', sub: '한국 선혼인신고 기준', items: [
@@ -1507,7 +1558,7 @@
 
     cambodia: {
       nav: '캄보디아', group: '국제결혼', title: '캄보디아 국제결혼', short: '캄보디아',
-      code: 'F-6', kicker: '캄보디아 · PNH', card: 'pc-coral', mrz: 'V<KHMF6<<PHNOMPENH<<ICN<<IHWA<',
+      code: 'F-6', kicker: '캄보디아 · PNH', card: 'pc-coral', mrz: 'V<KHMF6<<PHNOMPENH<<ICN<<EHWA<',
       lead: '외국인과의 결혼을 정부가 엄격히 관리하는 캄보디아의 허가 절차와 현지 인터뷰를 대비하고 F-6 발급까지 진행합니다.',
       sections: [
         { type: 'steps', id: 'flow', title: '진행 절차', sub: '캄보디아 선혼인신고 기준', items: [
@@ -1524,7 +1575,7 @@
 
     uzbekistan: {
       nav: '우즈벡 외 기타국가', group: '국제결혼', title: '우즈베키스탄 등 기타국가', short: '우즈벡 외',
-      code: 'F-6', kicker: '우즈베키스탄 · TAS', card: 'pc-coral', mrz: 'V<UZBF6<<TASHKENT<<ICN<<IHWA<',
+      code: 'F-6', kicker: '우즈베키스탄 · TAS', card: 'pc-coral', mrz: 'V<UZBF6<<TASHKENT<<ICN<<EHWA<',
       lead: '우즈베키스탄과 몽골, 러시아, 카자흐스탄, 키르기스스탄 등은 아포스티유 협약 가입 여부에 따라 인증 방식이 달라집니다. 국가별 체계부터 확인합니다.',
       sections: [
         { type: 'steps', id: 'flow', title: '우즈베키스탄 진행 절차', sub: '우즈베키스탄 선혼인신고 기준', items: [
@@ -1545,7 +1596,7 @@
 
     invitation: {
       nav: '가족 · 비즈니스 초청', group: '비자 업무', title: '가족 · 비즈니스 초청', short: '초청',
-      code: 'C-3', kicker: '초청비자', card: 'pc-cyan', mrz: 'V<KORC3<<INVITATION<<IHWA<<<<<',
+      code: 'C-3', kicker: '초청비자', card: 'pc-cyan', mrz: 'V<KORC3<<INVITATION<<EHWA<<<<<',
       lead: '배우자 부모님 방문부터 해외 바이어 초청까지, 목적에 맞는 비자 코드를 고르고 초청 사유와 귀국 보증을 입증합니다.',
       sections: [
         { type: 'compare', id: 'types', title: '초청 유형', items: [
@@ -1572,7 +1623,7 @@
 
     nationality: {
       nav: '국적 및 영주권', group: '비자 업무', title: '국적 및 영주권', short: '국적 · 영주권',
-      code: 'F-5', kicker: '영주 · 귀화 · 국적회복', card: 'pc-magenta', mrz: 'V<KORF5<<RESIDENT<<IHWA<<<<<<<',
+      code: 'F-5', kicker: '영주 · 귀화 · 국적회복', card: 'pc-magenta', mrz: 'V<KORF5<<RESIDENT<<EHWA<<<<<<<',
       lead: '혼인 간이귀화, 일반귀화, 국적회복과 F-5 영주권까지 지금의 체류자격에서 갈 수 있는 가장 빠른 길을 찾습니다.',
       sections: [
         { type: 'compare', id: 'types', title: '국적과 영주권', items: [
@@ -1599,7 +1650,7 @@
 
     cases: {
       nav: '비자업무사례', group: '사무소', title: '비자업무사례', short: '업무사례',
-      code: 'CASE', kicker: '고객센터', card: 'pc-dark', mrz: 'V<KORCASES<<ARCHIVE<<IHWA<<<<<',
+      code: 'CASE', kicker: '고객센터', card: 'pc-dark', mrz: 'V<KORCASES<<ARCHIVE<<EHWA<<<<<',
       lead: '자주 맡는 사건 유형별로 어떤 문제를 어떻게 풀었는지 정리했습니다.',
       sections: [
         { type: 'cases', id: 'list', title: '사례 모음', items: [
@@ -1640,7 +1691,7 @@
   function costPage({ name, iata, mid, extra, info, docKey, card = 'pc-coral' }) {
     return {
       nav: name, group: '비용 및 절차', title: `${name} 국제결혼 비용 및 절차`, short: name,
-      code: iata, kicker: `${name} · F-6`, card, mrz: `V<KOR${iata}<<MARRIAGE<<IHWA<<<<<<`,
+      code: iata, kicker: `${name} · F-6`, card, mrz: `V<KOR${iata}<<MARRIAGE<<EHWA<<<<<<`,
       lead: `${name} 국제결혼에 드는 비용 항목과 중개 비용, 알아 두시면 좋은 현지 정보를 정리했습니다.`,
       sections: [
         { type: 'table', id: 'items', title: '비용에 포함되는 항목', head: ['항목', '포함 내역'], rows: COST_ITEMS(extra) },
@@ -1667,7 +1718,7 @@
   const PAGES = {
     intro: {
       nav: '인사말', group: '회사소개', title: '인사말', short: '인사말',
-      code: 'IHWA', kicker: '다문화가정이 운영하는 국제결혼 정보회사', card: 'pc-dark', mrz: 'P<KORIHWA<<INTERNATIONAL<<MARRIAGE<',
+      code: 'EHWA', kicker: '다문화가정이 운영하는 국제결혼 정보회사', card: 'pc-dark', mrz: 'P<KOREHWA<<INTERNATIONAL<<MARRIAGE<',
       lead: '행복한 가정을 이룰 믿음직한 배우자를 주선하는 이화국제결혼을 찾아 주셔서 감사합니다.',
       sections: [
         { type: 'prose', id: 'greeting', title: '인사드립니다', paras: [
@@ -1687,7 +1738,7 @@
 
     license: {
       nav: '인증현황', group: '회사소개', title: '인증현황', short: '인증현황',
-      code: 'REG', kicker: '등록 · 인증', card: 'pc-dark', mrz: 'P<KORIHWA<<22<0001<<JONGNO<<<<<<<<',
+      code: 'REG', kicker: '등록 · 인증', card: 'pc-dark', mrz: 'P<KOREHWA<<22<0001<<JONGNO<<<<<<<<',
       lead: '이화국제결혼은 「결혼중개업의 관리에 관한 법률」에 따라 종로구청에 등록한 국제결혼중개업체입니다.',
       sections: [
         { type: 'table', id: 'certs', title: '등록 · 인증 내역', head: ['서류', '내용', '발급'], rows: [
@@ -1701,7 +1752,7 @@
 
     insurance: {
       nav: '보증보험 피해보상절차', group: '회사소개', title: '보증보험 피해보상절차', short: '피해보상절차',
-      code: 'SGI', kicker: '서울보증보험', card: 'pc-dark', mrz: 'P<KORIHWA<<GUARANTEE<<SGI<<<<<<<<',
+      code: 'SGI', kicker: '서울보증보험', card: 'pc-dark', mrz: 'P<KOREHWA<<GUARANTEE<<SGI<<<<<<<<',
       lead: '이화국제결혼과 계약한 뒤 당사로 인해 손해가 생겼다면 결혼중개업법에 따라 손해배상을 청구하실 수 있습니다.',
       sections: [
         { type: 'list', id: 'claim', title: '손해배상 청구절차', items: [
@@ -1725,7 +1776,7 @@
 
     'cost-kg': Object.assign({}, OLD.uzbekistan, {
       nav: '키르기스스탄', group: '비용 및 절차', title: '키르기스스탄 국제결혼', short: '키르기스스탄',
-      code: 'FRU', kicker: '키르기스스탄 · F-6', card: 'pc-coral', mrz: 'V<KORFRU<<MARRIAGE<<IHWA<<<<<<',
+      code: 'FRU', kicker: '키르기스스탄 · F-6', card: 'pc-coral', mrz: 'V<KORFRU<<MARRIAGE<<EHWA<<<<<<',
       sections: OLD.uzbekistan.sections.concat([{ type: 'note', text: '키르기스스탄 비용 상세는 회원 전용 내용이라 상담 시 안내해 드립니다.' }]),
     }),
 
@@ -1746,7 +1797,7 @@
 
     special: {
       nav: '특가결혼비용', group: '비용 및 절차', title: '특가결혼비용', short: '특가결혼',
-      code: 'SALE', kicker: '서류비만으로 진행', card: 'pc-sunset', mrz: 'V<KORSPECIAL<<PRICE<<IHWA<<<<<<',
+      code: 'SALE', kicker: '서류비만으로 진행', card: 'pc-sunset', mrz: 'V<KORSPECIAL<<PRICE<<EHWA<<<<<<',
       lead: '항공권과 현지 만남은 직접 준비하시고, 이화는 국제결혼 서류비만으로 진행을 돕는 방식입니다.',
       sections: [
         { type: 'prose', id: 'what', title: '특가 결혼비용이란', paras: [
@@ -1774,7 +1825,7 @@
 
     couples: {
       nav: '성혼커플', group: '결혼 이야기', title: '성혼커플', short: '성혼커플',
-      code: '96', kicker: '결혼 이야기', card: 'pc-coral', mrz: 'V<KORCOUPLES<<96<<IHWA<<<<<<<<<',
+      code: '96', kicker: '결혼 이야기', card: 'pc-coral', mrz: 'V<KORCOUPLES<<96<<EHWA<<<<<<<<<',
       lead: '이화국제결혼을 통해 가정을 이룬 부부들의 결혼 소식입니다.',
       sections: [
         { type: 'prose', id: 'count', title: '96쌍의 결혼을 축하드립니다', paras: [
@@ -1786,7 +1837,7 @@
 
     documents: {
       nav: '서류대행 안내', group: '서류대행', title: '서류대행', short: '서류대행',
-      code: 'DOC', kicker: '혼인신고 · 초청 · 번역공증', card: 'pc-blue', mrz: 'V<KORDOC<<DOCUMENTS<<IHWA<<<<<<',
+      code: 'DOC', kicker: '혼인신고 · 초청 · 번역공증', card: 'pc-blue', mrz: 'V<KORDOC<<DOCUMENTS<<EHWA<<<<<<',
       lead: '개인적으로 또는 지인 소개로 만나 결혼하시는 분들도 양국 혼인신고와 신부 비자 절차를 맡기실 수 있습니다.',
       sections: [
         { type: 'reqs', id: 'services', title: '서류대행 업무', items: [
@@ -1813,7 +1864,7 @@
 
     notice: {
       nav: '알림방', group: '커뮤니티', title: '알림방', short: '알림방',
-      code: 'NEWS', kicker: '커뮤니티', card: 'pc-dark', mrz: 'V<KORNOTICE<<BOARD<<IHWA<<<<<<<',
+      code: 'NEWS', kicker: '커뮤니티', card: 'pc-dark', mrz: 'V<KORNOTICE<<BOARD<<EHWA<<<<<<<',
       lead: '국제결혼 진행에 도움이 되는 정보와 사무소 소식을 올립니다. 제목을 누르면 기존 게시판에서 글을 보실 수 있습니다.',
       sections: [
         { type: 'board', id: 'list', title: '최근 공지', href: BOARD + 'board71', items: [
@@ -1834,15 +1885,21 @@
     },
 
     signup: {
-      nav: '회원가입', group: '멤버', title: '회원가입', short: '회원가입',
-      code: 'JOIN', kicker: '멤버', card: 'pc-coral', mrz: 'P<KORIHWA<<MEMBER<<JOIN<<<<<<<<<<<',
+      nav: '회원가입', group: '멤버', title: '회원가입', short: '회원가입', plain: true,
+      code: 'JOIN', kicker: '멤버', card: 'pc-coral', mrz: 'P<KOREHWA<<MEMBER<<JOIN<<<<<<<<<<<',
       lead: '회원이 되시면 국가별 결혼스토리와 회원 전용 비용 안내를 보시고, 상담게시판에 글을 남기실 수 있습니다.',
       sections: [{ type: 'signup', id: 'join' }],
     },
 
+    login: {
+      nav: '로그인', group: '멤버', title: '로그인', short: '로그인', plain: true,
+      lead: '회원 아이디와 비밀번호로 로그인하세요. 로그인하면 결혼스토리와 회원 전용 비용 안내를 보실 수 있습니다.',
+      sections: [{ type: 'login', id: 'login' }],
+    },
+
     community: {
       nav: '상담게시판 · 자료실', group: '커뮤니티', title: '상담게시판 · 자료실', short: '커뮤니티',
-      code: 'TALK', kicker: '커뮤니티', card: 'pc-dark', mrz: 'V<KORCOMMUNITY<<IHWA<<<<<<<<<<<',
+      code: 'TALK', kicker: '커뮤니티', card: 'pc-dark', mrz: 'V<KORCOMMUNITY<<EHWA<<<<<<<<<<<',
       lead: '상담 글 작성과 회원 전용 자료는 기존 이화국제결혼 홈페이지에서 이용하실 수 있습니다.',
       sections: [
         { type: 'extlinks', id: 'boards', title: '게시판 바로가기', items: [
@@ -1871,6 +1928,18 @@
       case 'compare': body = `<div class="compare">${s.items.map(([tag, t, list]) => `<div class="cmp"><span class="tag">${esc(tag)}</span><h3>${esc(t)}</h3><ul>${list.map(li => `<li>${esc(li)}</li>`).join('')}</ul></div>`).join('')}</div>`; break;
       case 'table': body = `<div class="doc-table-wrap"><table class="doc-table"><thead><tr>${s.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`; break;
       case 'list': body = `<ul class="blist">${s.items.map(li => `<li>${CHECK}<span>${esc(li)}</span></li>`).join('')}</ul>`; break;
+      // Posts straight to the goodwed.kr member system; this site never sees the password.
+      case 'login': body = `
+        <form class="login-card" id="loginForm" action="https://goodwed.kr/bbs/login_check.php" method="post" novalidate>
+          <input type="hidden" name="url" value="https://goodwed.kr" />
+          <div class="field"><label for="loginId">아이디</label><input id="loginId" name="mb_id" autocomplete="username" required /></div>
+          <div class="field"><label for="loginPw">비밀번호</label><input id="loginPw" name="mb_password" type="password" autocomplete="current-password" required /></div>
+          <label class="chk plain"><input type="checkbox" id="autoLogin" name="auto_login" /> 자동 로그인</label>
+          <p class="login-msg" id="loginMsg" role="alert"></p>
+          <button class="btn btn-primary join-submit" type="submit">로그인</button>
+          <div class="login-links"><a href="https://goodwed.kr/bbs/password_lost.php" target="_blank" rel="noopener">아이디 · 비밀번호 찾기 ↗</a><a href="#signup">회원가입</a></div>
+          <p class="login-note">로그인하면 회원 전용 게시판이 있는 이화국제결혼 회원 페이지(goodwed.kr)로 이동합니다.</p>
+        </form>`; break;
       case 'signup': body = `
         <div class="join">
           <aside class="join-aside">
@@ -1923,7 +1992,7 @@
       case 'notices': body = `<ul class="notice-list">${s.items.map(([t, d, b], i) => `<li><details><summary><span class="no">${String(s.items.length - i).padStart(2, '0')}</span><span class="t">${esc(t)}</span><span class="d">${esc(d)}</span></summary><div class="body">${esc(b)}</div></details></li>`).join('')}</ul>`; break;
       case 'contact': body = `<div class="doc-table-wrap"><table class="doc-table"><tbody>
           <tr><td>주소</td><td>서울특별시 종로구 종로3길 38 진학회관 707호 (청진동)</td></tr>
-          <tr><td>전화</td><td>02-2269-3457</td></tr>
+          <tr><td>전화</td><td>02-2269-3457 · 010-4519-3569</td></tr>
           <tr><td>이메일</td><td>gdwed337@naver.com</td></tr>
           <tr><td>등록번호</td><td>국제결혼중개업 서울-종로-국제-22-0001 · 사업자 566-05-00714</td></tr></tbody></table></div>`; break;
       case 'extlinks': body = `<div class="linkgrid">${s.items.map(([t, d, href]) => `<a class="lg-item" href="${esc(href)}" target="_blank" rel="noopener"><span class="iata">goodwed.kr</span><b>${esc(t)}</b><small>${esc(d)}</small><span class="go">바로가기 ↗</span></a>`).join('')}</div>`; break;
@@ -1941,32 +2010,32 @@
     const crumbs = [`<a href="#home">홈</a>`, '<span>/</span>', `<span>${esc(p.group)}</span>`, '<span>/</span>', `<span aria-current="page">${esc(p.short)}</span>`].join('');
 
     sub.innerHTML = `
-      <section class="subhero"><div class="container">
+      <section class="subhero${p.plain ? ' subhero-plain' : ''}"><div class="container">
         <div>
           <nav class="crumbs" aria-label="현재 위치">${crumbs}</nav>
           <h1>${esc(p.title)}</h1>
           <p class="lead">${esc(p.lead)}</p>
-          <div class="cta-row">
+          ${p.plain ? '' : `<div class="cta-row">
             <a class="btn btn-primary" href="#contact">빠른 상담 신청 <span class="arrow">→</span></a>
             <a class="btn btn-secondary" href="#s-${titled[0] ? titled[0].id : p.sections[0].id}">${titled[0] ? esc(titled[0].title) : '아래로 보기'}</a>
-          </div>
+          </div>`}
         </div>
-        <div class="pcard ${p.card}">
+        ${p.plain ? '' : `<div class="pcard ${p.card}">
           <svg class="seal"><use href="#seal"/></svg>
-          <div class="top"><span class="kicker">${esc(p.kicker)}</span><span class="badge badge-new">IHWA</span></div>
+          <div class="top"><span class="kicker">${esc(p.kicker)}</span><span class="badge badge-new">EHWA</span></div>
           <div class="code">${esc(p.code)}</div>
           <h3>${esc(p.short)}</h3>
           <div class="mrz">${esc(p.mrz)}</div>
-        </div>
+        </div>`}
       </div></section>
 
       <div class="container docs">
         <article class="doc-body">
           ${p.sections.map(sectionHTML).join('')}
-          <div class="sub-cta"><div class="promo-cta">
+          ${p.plain ? '' : `<div class="sub-cta"><div class="promo-cta">
             <div><h2>${esc(p.short)}, 지금 상담받으세요</h2><p>희망하시는 국가와 상황을 말씀해 주시면 비용과 일정을 바로 안내해 드립니다.</p></div>
             <div class="btns"><a class="btn btn-tertiary" href="tel:0222693457">02-2269-3457</a><a class="btn btn-ghost-light" href="mailto:gdwed337@naver.com">gdwed337@naver.com</a></div>
-          </div></div>
+          </div></div>`}
           ${i < 0 ? '' : `<nav class="pn" aria-label="이전 다음 업무">
             <a href="#${prevKey}"><small>← 이전</small><b>${esc(prev.short)}</b></a>
             <a class="next" href="#${nextKey}"><small>다음 →</small><b>${esc(next.short)}</b></a>
@@ -2067,6 +2136,12 @@
     }
   });
   document.addEventListener('submit', e => {
+    if (e.target.id === 'loginForm') {
+      const id = e.target.querySelector('#loginId'), pw = e.target.querySelector('#loginPw');
+      const empty = !id.value.trim() ? id : !pw.value ? pw : null;
+      if (empty) { e.preventDefault(); document.getElementById('loginMsg').textContent = '아이디와 비밀번호를 입력해 주세요.'; empty.focus(); }
+      return;
+    }
     if (e.target.id !== 'joinForm') return;
     e.preventDefault();
     const f = e.target, msg = document.getElementById('joinMsg'), done = document.getElementById('joinDone');
