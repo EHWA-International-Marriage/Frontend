@@ -7,6 +7,10 @@
 - 회원 전용 게시판과 상담 글쓰기는 기존 goodwed.kr 게시판으로 연결됩니다.
 - 로컬에서 보기: `python3 -m http.server 8000` 실행 후 http://localhost:8000
 
+## 작업 방법
+
+`main`은 실제 사이트입니다. 브랜치를 만들어 작업하고 PR로 합칩니다. 자세한 규칙은 [CONTRIBUTING.md](CONTRIBUTING.md)에 있습니다.
+
 ## Netlify 배포
 
 `netlify.toml`에 설정이 들어 있어 빌드 명령 없이 저장소 루트를 그대로 배포합니다.
