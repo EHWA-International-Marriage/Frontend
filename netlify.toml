@@ -1,6 +1,7 @@
-# Static single-file site: no build step, publish the repo root.
+# Pre-renders one HTML file per page into dist/ (see scripts/build.mjs).
 [build]
-  publish = "."
+  command = "node scripts/build.mjs"
+  publish = "dist"
 
 [[headers]]
   for = "/*"
