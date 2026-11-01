@@ -235,9 +235,9 @@ const COST_NOTES = [
   '행사 일정은 신랑과 업체 사정에 따라 바뀔 수 있습니다.',
   '고급 VIP 진행은 별도로 협의합니다.',
 ];
-function costPage({ name, iata, mid, extra, info, docKey, card = 'pc-coral' }) {
+function costPage({ name, alias, iata, mid, extra, info, docKey, card = 'pc-coral' }) {
   return {
-    nav: name, group: '비용 및 절차', title: `${name} 국제결혼 비용 및 절차`, short: name,
+    nav: name, group: '비용 및 절차', title: `${alias || name} 국제결혼 비용 및 절차`, short: name,
     code: iata, kicker: `${name} · F-6`, card, mrz: `V<KOR${iata}<<MARRIAGE<<EHWA<<<<<<`,
     lead: `${name} 국제결혼에 드는 비용 항목과 중개 비용, 알아 두시면 좋은 현지 정보를 정리했습니다.`,
     sections: [
@@ -246,16 +246,16 @@ function costPage({ name, iata, mid, extra, info, docKey, card = 'pc-coral' }) {
         ['계약금', '300만 원'], ['중도금', `${mid}만 원`], ['잔금', '200만 원'], ['성혼사례비', '200만 원'] ] },
       { type: 'list', id: 'notes', title: '참고하세요', items: COST_NOTES },
       { type: 'table', id: 'info', title: `${name} 국가 정보`, head: ['항목', '내용'], rows: info },
-      { type: 'links', id: 'docs', title: '혼인 서류 절차 보기', keys: [docKey, 'documents'] },
+      { type: 'links', id: 'docs', title: '함께 보기', keys: ['cost', docKey, 'documents'] },
     ],
   };
 }
 
 const GROUPS = [
   ['회사소개', ['intro', 'license', 'insurance']],
-  ['비용 및 절차', ['cost-uz', 'cost-kg', 'cost-ru', 'cost-cn', 'cost-vn', 'special']],
+  ['비용 및 절차', ['cost', 'cost-uz', 'cost-kg', 'cost-ru', 'cost-cn', 'cost-vn', 'special']],
   ['결혼 이야기', ['story', 'couples']],
-  ['서류대행', ['documents', 'invitation', 'nationality', 'vietnam', 'china', 'uzbekistan', 'philippines', 'thailand', 'cambodia']],
+  ['서류대행', ['documents', 'f6-visa', 'invitation', 'nationality', 'vietnam', 'china', 'uzbekistan', 'philippines', 'thailand', 'cambodia']],
   ['커뮤니티', ['notice', 'community']],
 ];
 const NAV_OF_GROUP = { '회사소개': 'about', '비용 및 절차': 'cost', '결혼 이야기': 'story', '서류대행': 'docs', '커뮤니티': 'community' };
@@ -316,16 +316,59 @@ const PAGES = {
     ],
   },
 
-  'cost-uz': costPage({ name: '우즈베키스탄', iata: 'TAS', mid: 1900, extra: {}, docKey: 'uzbekistan', info: [
+  cost: {
+    nav: '국제결혼 비용 한눈에', group: '비용 및 절차', title: '국제결혼 비용 총정리 · 국가별 비교', short: '국제결혼 비용',
+    code: 'COST', kicker: '비용 및 절차', card: 'pc-coral', mrz: 'V<KORCOST<<MARRIAGE<<EHWA<<<<<<<',
+    lead: '국제결혼 비용이 얼마나 드는지 나라별로 비교했습니다. 중개 비용과 그 안에 포함되는 항목, 따로 준비할 비용을 한 번에 확인하세요.',
+    sections: [
+      { type: 'table', id: 'compare', title: '국가별 중개 비용', sub: '계약금, 중도금, 잔금으로 나누어 내고 성혼사례비가 따로 있습니다. 나라마다 중도금이 다릅니다.', head: ['국가', '계약금', '중도금', '잔금', '성혼사례비'], rows: [
+        ['우즈베키스탄', '300만 원', '1,900만 원', '200만 원', '200만 원'],
+        ['러시아', '300만 원', '2,300만 원', '200만 원', '200만 원'],
+        ['중국', '300만 원', '1,200만 원', '200만 원', '200만 원'],
+        ['베트남', '300만 원', '1,000만 원', '200만 원', '200만 원'],
+        ['키르기스스탄', '상담 시 안내', '상담 시 안내', '상담 시 안내', '상담 시 안내'],
+      ]},
+      { type: 'table', id: 'included', title: '중개 비용에 포함되는 항목', head: ['항목', '포함 내역'], rows: COST_ITEMS() },
+      { type: 'list', id: 'extra', title: '따로 준비하는 비용', items: [
+        '2차 출국 비용',
+        '신부와 처가에 드리는 지참금, 선물, 쇼핑, 신부 어학비 (신부에게 직접 전달)',
+        '신부 입국 항공비',
+        '고급 VIP 진행 (별도 협의)' ] },
+      { type: 'callout', title: '금액은 바뀔 수 있습니다', text: '현지 사정이나 급격한 환율 변동이 있으면 금액에 차이가 생길 수 있습니다. 정확한 비용과 일정은 상담 때 희망 국가와 상황을 듣고 안내해 드립니다.' },
+      { type: 'prose', id: 'save', title: '비용을 줄이고 싶다면', paras: [
+        '항공권과 현지 만남을 직접 준비하고 국제결혼 서류비만 내는 특가결혼 방식도 있습니다. 서류만 필요하시다면 국제결혼 서류대행을 이용하실 수 있습니다.' ] },
+      { type: 'links', id: 'countries', title: '나라별 비용과 절차 자세히 보기', keys: ['cost-uz', 'cost-ru', 'cost-cn', 'cost-vn', 'cost-kg', 'special'] },
+    ],
+  },
+
+  'cost-uz': costPage({ name: '우즈베키스탄', alias: '우즈베키스탄(우즈벡)', iata: 'TAS', mid: 1900, extra: {}, docKey: 'uzbekistan', info: [
     ['국명', '우즈베키스탄 공화국'], ['수도', '타슈켄트'], ['시차', '한국보다 4시간 늦음'], ['언어', '우즈베크어, 러시아어'],
     ['면적', '한반도의 약 2배'], ['국제전화', '+998'], ['전압', '220V, 50Hz'],
     ['기후', '대륙성 기후로 4~11월은 건조하고 일교차가 큽니다. 여름은 평균 40℃ 안팎으로 덥고 건조하며, 겨울은 평균 -1℃ 내외지만 영하 15℃ 아래로 내려가기도 합니다. 겨울이 우기라 눈과 비가 잦습니다.'] ] }),
 
-  'cost-kg': Object.assign({}, OLD.uzbekistan, {
-    nav: '키르기스스탄', group: '비용 및 절차', title: '키르기스스탄 국제결혼', short: '키르기스스탄',
+  'cost-kg': {
+    nav: '키르기스스탄', group: '비용 및 절차', title: '키르기스스탄 국제결혼 비용 및 절차', short: '키르기스스탄',
     code: 'FRU', kicker: '키르기스스탄 · F-6', card: 'pc-coral', mrz: 'V<KORFRU<<MARRIAGE<<EHWA<<<<<<',
-    sections: OLD.uzbekistan.sections.concat([{ type: 'note', text: '키르기스스탄 비용 상세는 회원 전용 내용이라 상담 시 안내해 드립니다.' }]),
-  }),
+    lead: '키르기스스탄 국제결혼의 진행 순서와 혼인 서류, 현지 정보를 정리했습니다. 비용은 상담 때 안내해 드립니다.',
+    sections: [
+      { type: 'prose', id: 'about', title: '키르기스스탄 국제결혼', paras: [
+        '키르기스스탄은 키르기스어와 러시아어를 함께 쓰는 중앙아시아 국가입니다. 혼인 서류는 우즈베키스탄 등 다른 CIS 국가처럼 현지 혼인 등록과 아포스티유 인증을 거쳐 준비합니다.' ] },
+      { type: 'steps', id: 'flow', title: '진행 절차', items: [
+        ['상담 · 맞선', '희망 상대와 일정을 정하고 현지에서 맞선을 봅니다.'],
+        ['한국 서류 준비', '혼인관계증명서, 범죄경력회신서, 건강진단서 등을 번역공증하고 아포스티유를 받습니다.'],
+        ['현지 혼인 등록', '현지 등록 기관에 혼인을 등록하고 결혼증명서를 받습니다.'],
+        ['국내 혼인신고', '결혼증명서 번역본과 배우자 여권 사본으로 시 · 구청에 신고합니다.'],
+        ['F-6 비자 신청', '주키르기스스탄 대한민국 대사관에 결혼비자를 신청합니다.'],
+      ]},
+      F6_REQS,
+      { type: 'table', id: 'info', title: '키르기스스탄 국가 정보', head: ['항목', '내용'], rows: [
+        ['국명', '키르기스 공화국'], ['수도', '비슈케크'], ['시차', '한국보다 3시간 늦음'], ['언어', '키르기스어, 러시아어'],
+        ['면적', '한반도의 약 0.9배'], ['국제전화', '+996'], ['전압', '220V, 50Hz'],
+        ['기후', '국토 대부분이 산악 지대인 대륙성 기후로 여름은 덥고 건조하며 겨울은 춥습니다.'] ] },
+      { type: 'note', text: '키르기스스탄 비용 상세는 회원 전용 내용이라 상담 시 안내해 드립니다.' },
+      { type: 'links', id: 'more', title: '함께 보기', keys: ['cost', 'uzbekistan', 'documents'] },
+    ],
+  },
 
   'cost-ru': costPage({ name: '러시아', iata: 'SVO', mid: 2300, extra: { album: true, office: true }, docKey: 'uzbekistan', info: [
     ['국명', '러시아 연방'], ['수도', '모스크바'], ['시차', '모스크바 기준 한국보다 6시간 늦음'], ['언어', '러시아어'],
@@ -383,9 +426,9 @@ const PAGES = {
   },
 
   documents: {
-    nav: '서류대행 안내', group: '서류대행', title: '서류대행', short: '서류대행',
+    nav: '서류대행 안내', group: '서류대행', title: '국제결혼 서류대행', short: '서류대행',
     code: 'DOC', kicker: '혼인신고 · 초청 · 번역공증', card: 'pc-blue', mrz: 'V<KORDOC<<DOCUMENTS<<EHWA<<<<<<',
-    lead: '개인적으로 또는 지인 소개로 만나 결혼하시는 분들도 양국 혼인신고와 신부 비자 절차를 맡기실 수 있습니다.',
+    lead: '국제결혼 서류대행으로 양국 혼인신고와 신부 결혼비자(F-6), 장모 · 처가 초청, 번역 공증을 맡기실 수 있습니다. 지인 소개로 만난 부부도 서류만 진행합니다.',
     sections: [
       { type: 'reqs', id: 'services', title: '서류대행 업무', items: [
         ['heart', '국제결혼 서류대행', '지인 소개 등으로 만나 결혼하시는 분의 양국 혼인신고와 신부 입국 비자 절차를 진행합니다. 국내에 체류 중인 외국인 여성과 결혼하실 때는 양국 혼인신고와 결혼비자 변경 절차를 맡습니다.'],
@@ -395,19 +438,37 @@ const PAGES = {
       ]},
       { type: 'links', id: 'countries', title: '국가별 혼인 서류 절차', keys: ['vietnam', 'china', 'uzbekistan', 'philippines', 'thailand', 'cambodia'] },
       F6_REQS, F6_LIMIT,
-      { type: 'links', id: 'more', title: '관련 업무', keys: ['invitation', 'nationality'] },
+      { type: 'links', id: 'more', title: '관련 업무', keys: ['f6-visa', 'invitation', 'nationality', 'cost'] },
     ],
   },
 
-  invitation: keep('invitation', { nav: '처가 · 가족 초청', title: '처가 · 가족 초청', short: '처가 · 가족 초청',
-    lead: '장모님과 장인어른, 처가 가족을 한국으로 초청하는 서류를 준비합니다. 방문 목적에 맞는 비자를 고르고 초청 사유와 귀국 보증을 입증합니다.' }),
+  'f6-visa': {
+    nav: '결혼비자(F-6) 안내', group: '서류대행', title: '결혼비자(F-6) 발급 요건과 절차', short: '결혼비자 F-6',
+    code: 'F-6', kicker: '결혼이민 비자', card: 'pc-blue', mrz: 'V<KORF6<<MARRIAGE<<VISA<<EHWA<<<',
+    lead: '결혼비자(F-6)는 한국인과 혼인한 외국인 배우자가 받는 결혼이민 비자입니다. 발급 요건과 진행 순서, 불허를 피하는 방법을 정리했습니다.',
+    sections: [
+      { type: 'steps', id: 'flow', title: '진행 순서', items: [
+        ['양국 혼인신고', '한국과 배우자 나라 양쪽에 혼인신고를 마칩니다. 어느 나라에서 먼저 할지는 나라와 상황에 따라 정합니다.'],
+        ['서류 준비', '소득, 주거, 의사소통, 혼인의 진정성을 보여 주는 서류를 갖춥니다.'],
+        ['비자 신청', '배우자 나라의 대한민국 대사관(또는 국내 출입국청)에 신청합니다.'],
+        ['심사 · 인터뷰', '서류 심사와 함께 부부 인터뷰가 진행되기도 합니다.'],
+        ['발급 · 입국', '비자가 나오면 배우자가 입국하고 외국인등록을 합니다.'],
+      ]},
+      F6_REQS, F6_LIMIT,
+      { type: 'links', id: 'countries', title: '나라별 혼인 서류 절차', keys: ['vietnam', 'china', 'uzbekistan', 'philippines', 'thailand', 'cambodia'] },
+      { type: 'links', id: 'more', title: '함께 보기', keys: ['documents', 'invitation', 'cost'] },
+    ],
+  },
+
+  invitation: keep('invitation', { nav: '장모 · 처가 초청', title: '장모 초청 비자 · 처가 가족 초청', short: '장모 · 처가 초청',
+    lead: '장모 초청 비자처럼 장모님과 장인어른, 처가 가족을 한국으로 초청하는 서류를 준비합니다. 방문 목적에 맞는 비자(C-3-1, F-1-5)를 고르고 초청 사유와 귀국 보증을 입증합니다.' }),
   nationality: keep('nationality', { nav: '국적 취득', title: '국적 취득 · 영주권', short: '국적 취득' }),
-  vietnam: keep('vietnam', { nav: '베트남 혼인 서류' }),
-  china: keep('china', { nav: '중국 혼인 서류' }),
-  uzbekistan: keep('uzbekistan', { nav: '우즈벡 · CIS 혼인 서류', title: '우즈베키스탄 · CIS 혼인 서류', short: '우즈벡 · CIS' }),
-  philippines: keep('philippines', { nav: '필리핀 혼인 서류' }),
-  thailand: keep('thailand', { nav: '태국 혼인 서류' }),
-  cambodia: keep('cambodia', { nav: '캄보디아 혼인 서류' }),
+  vietnam: keep('vietnam', { nav: '베트남 혼인 서류', title: '베트남 국제결혼 서류 · 혼인신고', sections: OLD.vietnam.sections.concat([{ type: 'links', id: 'cost', title: '함께 보기', keys: ['cost-vn', 'cost', 'f6-visa'] }]) }),
+  china: keep('china', { nav: '중국 혼인 서류', title: '중국 국제결혼 서류 · 혼인신고', sections: OLD.china.sections.concat([{ type: 'links', id: 'cost', title: '함께 보기', keys: ['cost-cn', 'cost', 'f6-visa'] }]) }),
+  uzbekistan: keep('uzbekistan', { nav: '우즈벡 · CIS 혼인 서류', title: '우즈베키스탄 · CIS 국제결혼 서류 · 혼인신고', short: '우즈벡 · CIS', sections: OLD.uzbekistan.sections.concat([{ type: 'links', id: 'cost', title: '함께 보기', keys: ['cost-uz', 'cost', 'f6-visa'] }]) }),
+  philippines: keep('philippines', { nav: '필리핀 혼인 서류', title: '필리핀 국제결혼 서류 · 혼인신고' }),
+  thailand: keep('thailand', { nav: '태국 혼인 서류', title: '태국 국제결혼 서류 · 혼인신고' }),
+  cambodia: keep('cambodia', { nav: '캄보디아 혼인 서류', title: '캄보디아 국제결혼 서류 · 혼인신고' }),
 
   notice: {
     nav: '알림방', group: '커뮤니티', title: '알림방', short: '알림방',
