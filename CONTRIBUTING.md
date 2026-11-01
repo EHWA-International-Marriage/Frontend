@@ -18,6 +18,7 @@ GitHub Flow를 씁니다. 사이트가 하나이고 `main`이 곧 배포본이�
 - 항상 최신 `main`에서 만듭니다: `git switch main && git pull && git switch -c feat/…`
 - 이름은 영어 소문자와 `-`만 씁니다.
 - 브랜치는 짧게 씁니다. 한 브랜치에 한 가지 일만 하고, 며칠 안에 PR로 합칩니다.
+- 문구나 페이지를 바꿨다면 PR 전에 `node scripts/build.mjs`를 한 번 실행해 오류 없이 끝나는지 확인합니다. Netlify도 같은 명령으로 배포합니다.
 
 ## 커밋 메시지
 
